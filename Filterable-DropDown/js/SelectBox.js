@@ -1,5 +1,5 @@
 'use strict';
-const SelectBox = function (element, opts) {
+const SelectBox = function(element, opts) {
 
     const el = element;
     const parent = el.parentNode;
@@ -74,8 +74,46 @@ const SelectBox = function (element, opts) {
         inputField.addEventListener('focus', focus);
         inputField.addEventListener('blur', blur);
 
+        // console.dir(wrapper);
+        // wrapper.lastChild.addEventListener('keydown', keyDown, false);
+
         filterOptions.forEach(option => {
             option.addEventListener('mousedown', selectOption);
+        });
+    }
+
+    let currentIndex = 0;
+
+    function keyDown(e) {
+        e.preventDefault();
+        console.log(e);
+        if (e.keyCode == 37 || e.keyCode == 38) {
+            if (currentIndex <= 0) {
+                currentIndex = filterOptions.length - 1 ;
+            } else {
+                currentIndex--;
+            }
+        } else if (e.keyCode == 39 || e.keyCode == 40) {
+            if (currentIndex >= filterOptions.length - 1) {
+                currentIndex = 0;
+            } else {
+                currentIndex++;
+            }
+        }
+
+        removeOptionsClass('focused');
+        filterOptions[currentIndex].classList.add('focused');
+
+        if( e.keyCode == 13 ){
+            inputField.value = filterOptions[currentIndex].textContent;
+            inputField.blur();
+            dropdown.classList.remove('open');
+        }
+    }
+
+    function removeOptionsClass(className) {
+        filterOptions.forEach(filter => {
+            filter.classList.remove(className);
         });
     }
 
@@ -98,9 +136,8 @@ const SelectBox = function (element, opts) {
                 }
             }
         } else {
-            for (let i = 0; i < filterOptions.length; i++) {
-                filterOptions[i].classList.remove('closed');
-            }
+            console.log('no length');
+            removeOptionsClass('closed');
         }
     }
 
@@ -108,9 +145,7 @@ const SelectBox = function (element, opts) {
         e.preventDefault();
         this.placeholder = 'Type to filter';
         dropdown.classList.add('open');
-        filterOptions.forEach(f => {
-            f.classList.remove('closed');
-        });
+        removeOptionsClass('closed');
     }
 
     function blur(e) {

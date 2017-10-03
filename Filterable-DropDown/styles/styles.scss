@@ -112,7 +112,8 @@ form {
     transition: background-color .3s;
     opacity: 1;
 
-    &:hover {
+    &:hover,
+    &.focused {
       background-color: #FF908B;
     }
 
