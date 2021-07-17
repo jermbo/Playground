@@ -1,8 +1,8 @@
 import React from "react";
-import { Pokemon } from "./API";
+import { PokemonWithPower } from "./API";
 
 const PokemonTable: React.FunctionComponent<{
-  pokemon: Pokemon[];
+  pokemon: PokemonWithPower[];
 }> = ({ pokemon }) => {
   return (
     <table>
@@ -12,6 +12,7 @@ const PokemonTable: React.FunctionComponent<{
           <td>Name</td>
           <td>Type</td>
           <td colSpan={6}>Stats</td>
+          <td>Power</td>
         </tr>
       </thead>
       <tbody>
@@ -26,6 +27,7 @@ const PokemonTable: React.FunctionComponent<{
             <td>{p.special_attack}</td>
             <td>{p.special_defense}</td>
             <td>{p.speed}</td>
+            <td>{p.power}</td>
           </tr>
         ))}
       </tbody>

@@ -10,6 +10,10 @@ export interface Pokemon {
   speed: number;
 }
 
+export interface PokemonWithPower extends Pokemon {
+  power: number;
+}
+
 export async function getAll(): Promise<Pokemon[]> {
   return fetch("/pokemon.json").then((resp) => resp.json());
 }
